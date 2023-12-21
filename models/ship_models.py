@@ -29,3 +29,22 @@ class ShipPositions(db.Model):
         }
 
 
+class Ship(db.Model):
+    __tablename__ = 'ships'
+
+    id = db.Column(db.Integer, primary_key=True)
+    IMO_number = db.Column(db.Integer)
+    name = db.Column(db.String)
+
+    def __init__(self, IMO_number, name):
+        self.IMO_number = IMO_number
+        self.name = name
+
+    def __repr__(self):
+        return f"<Ship {self.name}: {self.IMO_number}>"
+    
+    def to_dict(self):
+        return {
+            "IMO_number": self.IMO_number,
+            "name": self.name
+        }
