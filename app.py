@@ -1,8 +1,10 @@
 from flask import Flask
 from api.ships import ships
 from models.ship_models import db,Ship
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ships.db'
 
 

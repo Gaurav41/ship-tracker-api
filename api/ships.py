@@ -1,27 +1,31 @@
 from flask import Blueprint, request, jsonify
-from models.ship_models import db, ShipPositions
+from models.ship_models import db, ShipPositions, Ship
 from datetime import datetime
 import pandas as pd
 from scripts.load_csv import load_csv_to_database
 from sqlalchemy import desc
-
+from flask_cors import cross_origin
 
 ships = Blueprint("ships",__name__)
 
 
 @ships.route("/ships", methods=['GET'])
+@cross_origin()
 def get_ships():
-    data = ShipPositions.query.all()
+    data = Ship.query.all()
     if data:
-        return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in ShipPositions.query.all()]})
+        return jsonify([ship.to_dict() for ship in data])
+        # return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in data]})
     return jsonify({"message":"No data","data":None})
 
 
 @ships.route("/positions/<imo>", methods=['GET'])
+@cross_origin()
 def get_positions(imo):
     data = ShipPositions.query.filter_by(IMO_number=imo).order_by(desc(ShipPositions.timestamp)).all()
     if data:
-        return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in ShipPositions.query.all()]})
+        # return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in data]})
+        return jsonify([ship.to_dict() for ship in data])
     return jsonify({f"message":"No data for Imo {imo}","data":None})
 
 
