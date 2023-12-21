@@ -1,7 +1,8 @@
 from flask import Flask
 from api.ships import ships
-from models.ship_models import db,Ship
+from models.ship_models import db, Ship, ShipPositions
 from flask_cors import CORS
+from scripts.load_csv import load_position_csv_to_database
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +23,9 @@ with app.app_context():
         db.session.bulk_save_objects([ship1,ship2,ship3])
         db.session.commit()
         print("add some entries to ship table")
+    if not ShipPositions.query.all() :
+        load_position_csv_to_database(csv_file="positions (3).csv",db_connection=db.engine)
+        print("loaded position_csv_to_database")
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=5000)
