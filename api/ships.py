@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.ship_models import db, ShipPositions, Ship
 from datetime import datetime
 import pandas as pd
-from scripts.load_csv import load_csv_to_database
+from scripts.load_csv import load_position_csv_to_database, load_ship_csv_to_database
 from sqlalchemy import desc
 from flask_cors import cross_origin
 
@@ -26,14 +26,27 @@ def get_positions(imo):
     if data:
         # return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in data]})
         return jsonify([ship.to_dict() for ship in data])
-    return jsonify({f"message":"No data for Imo {imo}","data":None})
+    return jsonify({f"message":"No data for Imo {imo}","data":None}),404
 
 
-@ships.route("/load_data", methods=['POST'])
-def uplaod_csv():
+@ships.route("/load-position-data", methods=['POST'])
+def uplaod_position_csv():
     if request.files and 'file' in request.files:
         try:
-            load_csv_to_database(request.files['file'], db.engine)
+            load_position_csv_to_database(request.files['file'], db.engine)
+            return jsonify({"message": "Data inserted Succesfully"}),200
+        except Exception as e:
+            print(f"error while data ingestion: {e}")
+            return jsonify({"error":"Internal Server Error"}),500    
+    else:
+        return jsonify({"error":"File not received"}),400
+    
+
+@ships.route("/load-ship-data", methods=['POST'])
+def uplaod_ship_csv():
+    if request.files and 'file' in request.files:
+        try:
+            load_ship_csv_to_database(request.files['file'], db.engine)
             return jsonify({"message": "Data inserted Succesfully"}),200
         except Exception as e:
             print(f"error while data ingestion: {e}")
