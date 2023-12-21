@@ -1,2 +1,5 @@
 .env
 /venv
+/instance
+/instance/*
+*.db
