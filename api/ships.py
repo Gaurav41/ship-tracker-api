@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+import sqlalchemy
 from models.ship_models import db, ShipPositions, Ship
 from datetime import datetime
 import pandas as pd
@@ -48,6 +49,9 @@ def uplaod_ship_csv():
         try:
             load_ship_csv_to_database(request.files['file'], db.engine)
             return jsonify({"message": "Data inserted Succesfully"}),200
+        except sqlalchemy.exc.IntegrityError as e:
+            return jsonify({"error":f"Dublicate data {e}"}),500    
+ 
         except Exception as e:
             print(f"error while data ingestion: {e}")
             return jsonify({"error":"Internal Server Error"}),500    

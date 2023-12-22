@@ -32,8 +32,8 @@ class ShipPositions(db.Model):
 class Ship(db.Model):
     __tablename__ = 'ships'
 
-    id = db.Column(db.Integer, primary_key=True)
-    IMO_number = db.Column(db.Integer)
+    # id = db.Column(db.Integer, primary_key=True)
+    IMO_number = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String)
 
     def __init__(self, IMO_number, name):
