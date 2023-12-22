@@ -13,6 +13,9 @@ ships = Blueprint("ships",__name__)
 @ships.route("/ships", methods=['GET'])
 @cross_origin()
 def get_ships():
+    """ GET API 
+        Return all rows in Ship table as a json data
+    """
     data = Ship.query.all()
     if data:
         return jsonify([ship.to_dict() for ship in data])
@@ -23,6 +26,11 @@ def get_ships():
 @ships.route("/positions/<imo>", methods=['GET'])
 @cross_origin()
 def get_positions(imo):
+    """GET API 
+    
+    argument: imo -- IMO number of ship
+    Return: Return all rows in ShipPosition table as a json data for given IMO number
+    """    
     data = ShipPositions.query.filter_by(IMO_number=imo).order_by(desc(ShipPositions.timestamp)).all()
     if data:
         # return jsonify({"message":f"{len(data)} records found", "data":[ship.to_dict() for ship in data]})
@@ -32,6 +40,11 @@ def get_positions(imo):
 
 @ships.route("/load-position-data", methods=['POST'])
 def uplaod_position_csv():
+    """POST API 
+    Insert the data from csv file to database ShipPosition table
+    Payload: form-data, csv file
+    Return: Success/Error response
+    """  
     if request.files and 'file' in request.files:
         try:
             load_position_csv_to_database(request.files['file'], db.engine)
@@ -45,6 +58,11 @@ def uplaod_position_csv():
 
 @ships.route("/load-ship-data", methods=['POST'])
 def uplaod_ship_csv():
+    """POST API 
+    Insert the data from csv file to database Ship table
+    Payload: form-data, csv file
+    Return: Success/Error response
+    """ 
     if request.files and 'file' in request.files:
         try:
             load_ship_csv_to_database(request.files['file'], db.engine)
