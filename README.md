@@ -69,3 +69,22 @@ run
 
 4. [POST] http://127.0.0.1:5000/api/load-ship-data
     ![Alt text](postman/image-3.png)
+
+
+## Docker
+
+1. Build docker image
+    `docker build --tag ship-app .`
+
+2. View images
+    `docker images`
+
+3. Run docker image
+    `docker run -d -p 5000:5000 ship-app`
+    Application will start, Hit  http://localhost:5000/api/ships to check.
+
+4. See running container
+    `docker ps`
+
+5. To stop docker container
+    `docker stop <container_id>`
