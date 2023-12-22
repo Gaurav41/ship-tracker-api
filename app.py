@@ -13,6 +13,7 @@ app.register_blueprint(ships, url_prefix="/api")
 
 db.init_app(app)
 
+# Initialize the database, create all tables and insert data from csv to tables
 with app.app_context():
     db.create_all()
     print("database created")
