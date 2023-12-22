@@ -28,9 +28,9 @@
 
 ## APIs
 1. [GET]  http://localhost:5000/api/ships
-2. [GET]  http://127.0.0.1:5000/api/positions/IMO_number
+2. [GET]  http://127.0.0.1:5000/api/positions/9632179
     
-    9632179 is an IMO_number
+    9632179 is an IMO_number of ship
 
 3. [POST] http://127.0.0.1:5000/api/load-position-data
     Upload a ship position data csv file, it will insert data from file into database.
