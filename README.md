@@ -41,6 +41,10 @@
 4. [POST] http://127.0.0.1:5000/api/load-ship-data
     Upload a ship data csv file, it will insert data from file into database
 
+## Testing with Pytest
+run
+`python -m pytest` or `python -m pytest tests --disable-warnings `
+
 ## Testing with postman or curl
 1. `curl --location 'http://127.0.0.1:5000/api/load-position-data' \
 --form 'file=@"<path_to_csv_file>"'`
