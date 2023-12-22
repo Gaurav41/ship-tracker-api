@@ -1,5 +1,6 @@
 from flask import Flask
 from api.ships import ships
+from api.home import home
 from models.ship_models import db, Ship, ShipPositions
 from flask_cors import CORS
 from scripts.load_csv import load_position_csv_to_database
@@ -8,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ships.db'
 
-
+app.register_blueprint(home, url_prefix="/")
 app.register_blueprint(ships, url_prefix="/api")
 
 db.init_app(app)

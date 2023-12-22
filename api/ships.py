@@ -87,7 +87,7 @@ def uplaod_ship_csv():
         
     except sqlalchemy.exc.IntegrityError as e:
         logger.exception(e)
-        return jsonify({"error":f"Dublicate data {e}"}),500     
+        return jsonify({"error":f"Dublicate data"}),500     
     
     except Exception as e:
         logger.exception(e)
