@@ -1,2 +1,6 @@
 .env
 /venv
+/instance
+/instance/*
+*.db
+__pycache__
